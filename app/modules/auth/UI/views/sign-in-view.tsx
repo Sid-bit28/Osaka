@@ -18,12 +18,14 @@ import {
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { OctagonAlert, UserCheck } from 'lucide-react';
 import Link from 'next/link';
-import { ROUTES } from '@/constants/routes';
+import { DEFAULT_LOGIN_REDIRECT, ROUTES } from '@/constants/routes';
 import { SignInSchema } from '@/schemas';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { loginAction } from '@/actions/login-action';
 import { useTransition } from 'react';
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {};
 
@@ -31,6 +33,18 @@ const SignInView = (props: Props) => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use.'
+      : '';
+  console.log(urlError);
+
+  const onClick = (provider: 'google' | 'github') => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+    });
+  };
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -110,16 +124,17 @@ const SignInView = (props: Props) => {
                   />
                 </div>
 
-                {error && (
+                {(error || urlError) && (
                   <div className="mx-auto">
                     <Alert variant="destructive" className="border-none">
-                      {error && (
+                      {(error || urlError) && (
                         <OctagonAlert className="h-4 w-4 !text-destructive" />
                       )}
-                      <AlertTitle>{error}</AlertTitle>
+                      <AlertTitle>{error || urlError}</AlertTitle>
                     </Alert>
                   </div>
                 )}
+
                 {success && (
                   <div className="mx-auto">
                     <Alert variant="default" className="border-none">
@@ -147,6 +162,7 @@ const SignInView = (props: Props) => {
                     type="button"
                     className="w-full"
                     disabled={isPending}
+                    onClick={() => onClick('google')}
                   >
                     <FcGoogle className="h-8 w-8" />
                     Google
@@ -156,6 +172,7 @@ const SignInView = (props: Props) => {
                     type="button"
                     className="w-full"
                     disabled={isPending}
+                    onClick={() => onClick('github')}
                   >
                     <FaGithub className="h-8 w-8" />
                     Github

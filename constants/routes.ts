@@ -4,6 +4,7 @@ const ROUTES = {
   HOME: '/',
   SIGN_IN: '/auth/sign-in',
   SIGN_UP: '/auth/sign-up',
+  AUTH_ERROR: '/auth/error',
   TAG: (id: string) => `/tags/${id}`,
 };
 
@@ -12,7 +13,7 @@ const publicRoutes = ['/'];
 
 // Routes which will be used to auth
 // These routes will be redirect logged in users to /settings
-const authRoutes = ['/auth/sign-in', '/auth/sign-up'];
+const authRoutes = ['/auth/sign-in', '/auth/sign-up', '/auth/error'];
 
 // The prefix for API authentication routes
 // Routes that start with this prefix are used for API authentication process
