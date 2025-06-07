@@ -38,6 +38,7 @@ export const loginAction = async (values: z.infer<typeof SignInSchema>) => {
           };
       }
     }
+    // without throwing the error, the page doesn't redirect.
     throw error;
   }
 
