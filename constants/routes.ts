@@ -9,7 +9,7 @@ const ROUTES = {
 };
 
 // Routes which will be accessible to public and do not require login
-const publicRoutes = ['/'];
+const publicRoutes = ['/', '/auth/new-verification'];
 
 // Routes which will be used to auth
 // These routes will be redirect logged in users to /settings

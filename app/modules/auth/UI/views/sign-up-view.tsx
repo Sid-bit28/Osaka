@@ -24,8 +24,6 @@ import { useForm } from 'react-hook-form';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import z from 'zod';
-import { useSearchParams } from 'next/navigation';
-import { success } from 'zod/v4';
 
 type Props = {};
 
