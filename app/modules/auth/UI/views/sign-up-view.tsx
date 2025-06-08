@@ -13,10 +13,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ROUTES } from '@/constants/routes';
+import { DEFAULT_LOGIN_REDIRECT, ROUTES } from '@/constants/routes';
 import { SignUpSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OctagonAlert, UserCheck } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,6 +31,12 @@ const SignUpView = (props: Props) => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
+
+  const onClick = (provider: 'google' | 'github') => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+    });
+  };
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
@@ -215,6 +222,9 @@ const SignUpView = (props: Props) => {
                     type="button"
                     className="w-full"
                     disabled={isPending}
+                    onClick={() => {
+                      onClick('google');
+                    }}
                   >
                     <FcGoogle className="h-8 w-8" />
                     Google
@@ -224,6 +234,9 @@ const SignUpView = (props: Props) => {
                     type="button"
                     className="w-full"
                     disabled={isPending}
+                    onClick={() => {
+                      onClick('github');
+                    }}
                   >
                     <FaGithub className="h-8 w-8" />
                     Github
