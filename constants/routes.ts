@@ -13,7 +13,13 @@ const publicRoutes = ['/', '/auth/new-verification'];
 
 // Routes which will be used to auth
 // These routes will be redirect logged in users to /settings
-const authRoutes = ['/auth/sign-in', '/auth/sign-up', '/auth/error'];
+const authRoutes = [
+  '/auth/sign-in',
+  '/auth/sign-up',
+  '/auth/error',
+  '/auth/reset',
+  '/auth/reset-password',
+];
 
 // The prefix for API authentication routes
 // Routes that start with this prefix are used for API authentication process
