@@ -3,7 +3,7 @@ import { auth, signOut } from '@/auth';
 
 type Props = {};
 
-const Page = async (props: Props) => {
+const dashboardPage = async (props: Props) => {
   const session = await auth();
   return (
     <div>
@@ -20,4 +20,4 @@ const Page = async (props: Props) => {
   );
 };
 
-export default Page;
+export default dashboardPage;

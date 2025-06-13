@@ -26,7 +26,7 @@ const authRoutes = [
 const apiAuthPrefix = '/api/auth';
 
 // The default redirect path after login
-const DEFAULT_LOGIN_REDIRECT = '/settings';
+const DEFAULT_LOGIN_REDIRECT = '/dashboard';
 
 export {
   ROUTES,
